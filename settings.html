@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Settings</h1>
+    <form id="settings-form">
+        <label for="min-length">Minimum Length:</label>
+        <input type="number" id="min-length" name="min-length" min="1" max="50" value="1">
+        <br>
+        <label for="max-length">Maximum Length:</label>
+        <input type="number" id="max-length" name="max-length" min="1" max="50" value="5">
+        <br>
+        <label for="max-words">Maximum Words:</label>
+        <input type="number" id="max-words" name="max-words" min="1" max="50" value="10">
+        <br>
+        <button type="submit">Save</button>
+    </form>
+    <script src="js/settings.js"></script>
+</body>
+</html>
