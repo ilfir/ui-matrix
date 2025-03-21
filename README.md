@@ -1,21 +1,76 @@
-# Matrix Project
+# ui-matrix-project
 
-This project is designed to create an interactive 5x5 letter matrix using HTML and CSS. Users can input letters into each cell of the matrix, making it suitable for various applications such as games, puzzles, or educational tools.
+## Description
+Matrix 5x5
 
-## Project Structure
+## Getting Started
 
-- **css/styles.css**: Contains the CSS styles for the HTML table cells, ensuring that each cell stands out with distinct styling such as background color, border, and hover effects.
-- **index.html**: The main HTML file that includes the structure for the 5x5 letter matrix, featuring input fields for user interaction. This file links to the `styles.css` file for styling.
+### Prerequisites
+- Docker
+- Node.js
 
-## How to Use
+### Installing
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/ilfir/ui-matrix.git
+    cd ui-matrix-project
+    ```
 
-1. Open the `index.html` file in a web browser.
-2. You will see a 5x5 grid of input fields.
-3. Click on any cell to enter a letter. Each cell allows only one character due to the `maxlength` attribute set to 1.
-4. The styling applied from `styles.css` will enhance the visual appearance of the matrix, making it more engaging.
+2. Install dependencies:
+    ```sh
+    npm install
+    ```
 
-## Future Enhancements
+### Running Locally
+1. Start the application:
+    ```sh
+    npm start
+    ```
 
-- Implement JavaScript functionality to validate inputs or provide feedback.
-- Add features to save or export the matrix data.
-- Enhance the styling for better user experience and accessibility.
+2. Open your browser and navigate to `http://localhost:3000`.
+
+### Deploying to Docker
+
+1. Build the Docker image:
+    ```sh
+    docker build -t ui-matrix-project .
+    ```
+
+2. Run the Docker container:
+    ```sh
+    docker run -p 3000:3000 ui-matrix-project
+    ```
+
+### Running on Another Server
+
+1. Build the Docker image on your local machine:
+    ```sh
+    docker build -t ui-matrix-project .
+    ```
+
+2. Save the Docker image to a tar file:
+    ```sh
+    docker save -o ui-matrix-project.tar ui-matrix-project
+    ```
+
+3. Transfer the tar file to the remote server:
+    ```sh
+    scp ui-matrix-project.tar user@remote-server:/path/to/destination
+    ```
+
+4. SSH into the remote server:
+    ```sh
+    ssh user@remote-server
+    ```
+
+5. Load the Docker image from the tar file on the remote server:
+    ```sh
+    docker load -i /path/to/destination/ui-matrix-project.tar
+    ```
+
+6. Run the Docker container on the remote server:
+    ```sh
+    docker run -p 3000:3000 ui-matrix-project
+    ```
+
+Your project should now be accessible at `http://<remote-server-ip>:3000`.
