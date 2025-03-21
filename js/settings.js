@@ -28,6 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('maxWords', maxWords);
         localStorage.setItem('settingsSaved', 'true');
 
-        window.location.href = 'matrix-1.html';
+        window.location.href = 'index.html';
     });
 });
