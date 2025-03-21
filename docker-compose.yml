@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./js:/usr/src/app/js
+      - ./css:/usr/src/app/css
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
