@@ -52,9 +52,73 @@ document.addEventListener('DOMContentLoaded', function() {
         const matrixValues = Array.from(letterMatrixInputs).map(input => input.value);
         console.log('Matrix Submitted:', matrixValues);
         // Add your submission logic here
+
+         // Collect data from the matrix
+        const matrix = [];
+        const rows = document.querySelectorAll('#letter-matrix tr');
+        rows.forEach(row => {
+            const rowData = [];
+            row.querySelectorAll('input').forEach(input => {
+                rowData.push(input.value);
+            });
+            matrix.push(rowData);
+        });
+
+        // Prepare the data to be sent
+        const data = {
+            "maxLength": localStorage.getItem('maxLength'),
+            "maxWords": localStorage.getItem('maxWords'),
+            "minLength": localStorage.getItem('minLength'),
+            "lettersMatrix": matrix
+        };
+
+        // Make the HTTP request
+        const endpoint = localStorage.getItem('serviceEndpoint');
+        if (!endpoint) {
+            console.error('Error: Service endpoint is not set.');
+            alert('Service endpoint is not set. Please configure it in the settings.');
+            return;
+        }
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);            
+            displayResults(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert(`Failed to submit matrix. Error: ${error.message}`);
+        });
+
+
     });
 
     document.getElementById('settings-button').addEventListener('click', () => {
         window.location.href = 'settings.html';
     });
+
+
+    function displayResults(data) {
+        const resultsList = document.getElementById('results-list');
+        resultsList.innerHTML = ''; // Clear previous results
+
+        data.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = item;
+            resultsList.appendChild(listItem);
+        });
+    }
 });
