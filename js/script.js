@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             const [rowIndex, colIndex] = position.split(' ').map(Number);
                             const cell = document.querySelector(`#letter-matrix tr:nth-child(${rowIndex + 1}) td:nth-child(${colIndex + 1}) input`);
                             setTimeout(() => {
-                                cell.style.backgroundColor = 'green';
+                                cell.style.backgroundColor = 'lightgreen';
                             }, delay);
                             delay += 200; // Increase delay for the next cell
                         }
