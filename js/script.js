@@ -97,14 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             console.log('Success:', data);            
             displayResults(data);
-            localStorage.setItem('results', JSON.stringify(data)); 
+            localStorage.setItem('results', JSON.stringify(data));
         })
         .catch((error) => {
             console.error('Error:', error);
             alert(`Failed to submit matrix. Error: ${error.message}`);
         });
-
-
     });
 
     document.getElementById('settings-button').addEventListener('click', () => {
@@ -127,8 +125,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 const detailsList = document.createElement('ul');
                 wordItem.appendChild(detailsList);
 
+                // Add click event listener to call a function with the LI item
+                wordItem.addEventListener('click', () => {
+                    handleListItemClick(wordItem);
+                });
             }
         }
-}
+    }
 
+    function handleListItemClick(listItem) {
+        console.log('List item clicked:', listItem.textContent);
+
+        // Highlight the clicked LI item with light green background
+        const listItems = document.querySelectorAll('#results-list li');
+        listItems.forEach(item => {
+            item.style.backgroundColor = ''; // Reset background color of all items
+        });
+        listItem.style.backgroundColor = 'lightgreen'; // Highlight the clicked item
+
+        // Reset all cells to their previous color
+        letterMatrixInputs.forEach(input => {
+            input.style.backgroundColor = ''; // Reset background color of all cells
+        });
+
+        // Pull JSON data from local storage
+        const results = JSON.parse(localStorage.getItem('results'));
+        const word = listItem.textContent;
+
+        if (results && results[word]) {
+            // Highlight the corresponding cells
+            let delay = 0;
+            for (const index in results[word]) {
+                if (results[word].hasOwnProperty(index)) {
+                    const letterData = results[word][index];
+                    // alert(JSON.stringify(letterData));
+                    for (const letter in letterData) {
+                        if (letterData.hasOwnProperty(letter)) {
+                            const position = letterData[letter];
+                            const [rowIndex, colIndex] = position.split(' ').map(Number);
+                            const cell = document.querySelector(`#letter-matrix tr:nth-child(${rowIndex + 1}) td:nth-child(${colIndex + 1}) input`);
+                            setTimeout(() => {
+                                cell.style.backgroundColor = 'green';
+                            }, delay);
+                            delay += 200; // Increase delay for the next cell
+                        }
+                    }
+                }
+            }
+        }
+    }
 });
