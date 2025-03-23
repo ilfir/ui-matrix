@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             console.log('Success:', data);            
             displayResults(data);
+            localStorage.setItem('results', JSON.stringify(data)); 
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -110,50 +111,24 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'settings.html';
     });
 
-
-    // function displayResults(data) {
-    //     const resultsList = document.getElementById('results-list');
-    //     resultsList.innerHTML = ''; // Clear previous results
-
-    //     data.forEach(item => {
-    //         const listItem = document.createElement('li');
-    //         listItem.textContent = item;
-    //         resultsList.appendChild(listItem);
-    //     });
-    // }
-
     function displayResults(data) {
-    const resultsList = document.getElementById('results-list');
-    resultsList.innerHTML = ''; // Clear previous results
+        const resultsList = document.getElementById('results-list');
+        resultsList.innerHTML = ''; // Clear previous results
 
-    // Iterate through the outer object
-    for (const word in data) {
-        if (data.hasOwnProperty(word)) {
-            // Create a list item for the word
-            const wordItem = document.createElement('li');
-            wordItem.textContent = word;
-            resultsList.appendChild(wordItem);
+        // Iterate through the outer object
+        for (const word in data) {
+            if (data.hasOwnProperty(word)) {
+                // Create a list item for the word
+                const wordItem = document.createElement('li');
+                wordItem.textContent = word;
+                resultsList.appendChild(wordItem);
 
-            // Create a nested list for the word details
-            const detailsList = document.createElement('ul');
-            wordItem.appendChild(detailsList);
+                // Create a nested list for the word details
+                const detailsList = document.createElement('ul');
+                wordItem.appendChild(detailsList);
 
-            // Iterate through the inner objects
-            for (const index in data[word]) {
-                if (data[word].hasOwnProperty(index)) {
-                    const letterData = data[word][index];
-                    for (const letter in letterData) {
-                        if (letterData.hasOwnProperty(letter)) {
-                            const position = letterData[letter];
-                            const detailItem = document.createElement('li');
-                            detailItem.textContent = `${letter}: ${position}`;
-                            detailsList.appendChild(detailItem);
-                        }
-                    }
-                }
             }
         }
-    }
 }
 
 });
