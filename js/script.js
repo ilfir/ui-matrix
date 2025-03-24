@@ -112,23 +112,27 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayResults(data) {
         const resultsList = document.getElementById('results-list');
         resultsList.innerHTML = ''; // Clear previous results
-
-        // Iterate through the outer object
-        for (const word in data) {
-            if (data.hasOwnProperty(word)) {
-                // Create a list item for the word
-                const wordItem = document.createElement('li');
-                wordItem.textContent = word;
-                resultsList.appendChild(wordItem);
-
-                // Create a nested list for the word details
-                const detailsList = document.createElement('ul');
-                wordItem.appendChild(detailsList);
-
-                // Add click event listener to call a function with the LI item
-                wordItem.addEventListener('click', () => {
-                    handleListItemClick(wordItem);
-                });
+    
+        const dataArray = Object.keys(data);
+        const totalItems = dataArray.length;
+        const itemsPerColumn = Math.ceil(totalItems / 3);
+    
+        for (let i = 0; i < itemsPerColumn; i++) {
+            const row = resultsList.insertRow();
+    
+            for (let j = 0; j < 3; j++) {
+                const cell = row.insertCell(j);
+                const dataIndex = i + j * itemsPerColumn;
+    
+                if (dataIndex < totalItems) {
+                    const word = dataArray[dataIndex];
+                    cell.textContent = word;
+    
+                    // Add click event listener to call a function with the cell item
+                    cell.addEventListener('click', () => {
+                        handleListItemClick(cell);
+                    });
+                }
             }
         }
     }
@@ -173,5 +177,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
+    }
+
+    function addResult(column1, column2, column3) {
+        const table = document.getElementById('results-list');
+        const row = table.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+        cell1.textContent = column1;
+        cell2.textContent = column2;
+        cell3.textContent = column3;
     }
 });

@@ -72,3 +72,28 @@ button:hover {
     background-color: grey;
     cursor: not-allowed;
 }
+
+#results {
+    font-size: 1.3em; /* Adjust the font size as needed */
+    margin-top: 20px;
+    text-align: center;
+}
+
+#results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#results-table th, #results-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#results-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#results-table tr:hover {
+    background-color: #ddd;
+}
