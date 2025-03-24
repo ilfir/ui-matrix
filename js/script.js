@@ -46,6 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (letterMatrixInputs.length > 0) {
             letterMatrixInputs[0].focus();
         }
+
+        // Clear the results table
+        const resultsList = document.getElementById('results-list');
+        resultsList.innerHTML = '';
+
+        localStorage.setItem('results','');
     });
 
     document.getElementById('submit-button').addEventListener('click', () => {

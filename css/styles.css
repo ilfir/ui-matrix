@@ -74,9 +74,11 @@ button:hover {
 }
 
 #results {
-    font-size: 1.3em; /* Adjust the font size as needed */
+    font-size: 1.2em; /* Adjust the font size as needed */
     margin-top: 20px;
     text-align: center;
+    max-height: 300px; /* Set a fixed height for the results section */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 #results-table {
@@ -88,6 +90,11 @@ button:hover {
 #results-table th, #results-table td {
     border: 1px solid #ddd;
     padding: 8px;
+}
+
+#results-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
 
 #results-table tr:nth-child(even) {
