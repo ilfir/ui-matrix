@@ -92,11 +92,6 @@ button:hover {
     padding: 8px;
 }
 
-#results-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
 #results-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }

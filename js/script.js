@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     const inputs = document.querySelectorAll('input[type="text"]');
-    const minLength = localStorage.getItem('minLength') || 1;
-    const maxLength = 1; // Set maxLength to 1 to allow only one letter
     const settingsSaved = localStorage.getItem('settingsSaved') === 'true';
 
     const submitButton = document.getElementById('submit-button');
@@ -13,15 +11,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     inputs.forEach((input, index) => {
-        input.setAttribute('minlength', minLength);
-        input.setAttribute('maxlength', maxLength);
-
+        input.setAttribute('minlength', 1);
+        input.setAttribute('maxlength', 1);
+        
         input.addEventListener('input', function() {
-            if (this.value.length === this.maxLength) {
+            input.value = input.value.toLowerCase();
+            if (this.value.length === 1) {
                 const nextInput = inputs[index + 1];
                 if (nextInput) {
                     nextInput.focus();   
                 }
+            }
+        });
+
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Backspace' || event.key === 'Delete') {
+                input.value = '';
+                const prevInput = inputs[index + 1];
+                if (prevInput) {
+                    prevInput.focus();
+                }
+                event.preventDefault(); // Prevent default behavior of backspace/delete
             }
         });
     });
@@ -31,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
     letterMatrixInputs.forEach(input => {
         input.setAttribute('maxlength', 1); // Ensure only one letter is allowed
         input.addEventListener('input', () => {
-            input.style.backgroundColor = 'pink';
             if (input.value.length > 1) {
                 input.value = input.value.charAt(0); // Keep only the first character
             }
