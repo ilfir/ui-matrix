@@ -56,10 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
             letterMatrixInputs[0].focus();
         }
 
-        // Clear stuff
+        // Clear and hide stuff
         const resultsList = document.getElementById('results-list');
         resultsList.innerHTML = '';
         localStorage.setItem('results','');
+        document.getElementById('info').classList.add('hidden'); 
     });
 
     document.getElementById('submit-button').addEventListener('click', () => {
