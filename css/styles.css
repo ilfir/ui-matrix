@@ -99,3 +99,21 @@ button:hover {
 #results-table tr:hover {
     background-color: #ddd;
 }
+
+#info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#error {
+    color: red;
+}
+
+.hidden {
+    display: none;
+}

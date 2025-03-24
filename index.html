@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <div class="hidden" id="info">
+        <p id="time-taken">Time taken: </p>
+        <p id="word-count">Words returned: </p>
+        <p id="error" class="hidden">Error: </p>
+    </div>
     <button id="settings-button">Settings</button>
     <table id="letter-matrix">
         <tbody>
@@ -53,11 +58,11 @@
     </div>
     <div id="results">
         <table id="results-table">
-            <tbody id="results-list">
+        <tbody id="results-list">
                 <!-- Rows will be dynamically added here -->
-            </tbody>
+        </tbody>
         </table>
     </div>
-    <script src="js/script.js"></script>
+        <script src="js/script.js"></script>
 </body>
 </html>

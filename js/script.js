@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inputs.forEach((input, index) => {
         input.setAttribute('minlength', 1);
         input.setAttribute('maxlength', 1);
-        
+
         input.addEventListener('input', function() {
             input.value = input.value.toLowerCase();
             if (this.value.length === 1) {
@@ -95,6 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        const startTime = Date.now(); // Start time
+
         fetch(endpoint, {
             method: 'POST',
             headers: {
@@ -110,13 +112,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
+            const endTime = Date.now(); // End time
+            const timeTaken = endTime - startTime; // Calculate time taken
+            const wordCount = Object.keys(data).length; // Count the number of words
+
             console.log('Success:', data);            
             displayResults(data);
             localStorage.setItem('results', JSON.stringify(data));
+
+            // Display time taken and word count in the UI
+            document.getElementById('time-taken').textContent = `Time taken: ${timeTaken} ms`;
+            document.getElementById('word-count').textContent = `Words returned: ${wordCount}`;
+            document.getElementById('info').classList.remove('hidden'); // Show error message
+            document.getElementById('error').classList.add('hidden'); // Hide error message
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert(`Failed to submit matrix. Error: ${error.message}`);
+            document.getElementById('error').textContent = `Error: ${error.message}`;
+            document.getElementById('info').classList.remove('hidden'); // Show error message
+            document.getElementById('error').classList.remove('hidden'); // Show error message
         });
     });
 
@@ -127,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayResults(data) {
         const resultsList = document.getElementById('results-list');
         resultsList.innerHTML = ''; // Clear previous results
-    
+
         const dataArray = Object.keys(data);
         const totalItems = dataArray.length;
         const itemsPerColumn = Math.ceil(totalItems / 3);
@@ -142,11 +156,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (dataIndex < totalItems) {
                     const word = dataArray[dataIndex];
                     cell.textContent = word;
-    
+
                     // Add click event listener to call a function with the cell item
                     cell.addEventListener('click', () => {
                         handleListItemClick(cell);
-                    });
+                });
                 }
             }
         }
