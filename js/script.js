@@ -56,10 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
             letterMatrixInputs[0].focus();
         }
 
-        // Clear the results table
+        // Clear stuff
         const resultsList = document.getElementById('results-list');
         resultsList.innerHTML = '';
-
         localStorage.setItem('results','');
     });
 
@@ -95,8 +94,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const startTime = Date.now(); // Start time
+        // Clear and hide stuff 
+        const resultsList = document.getElementById('results-list');
+        resultsList.innerHTML = '';
+        localStorage.setItem('results','');
+        document.getElementById('info').classList.add('hidden'); 
+        letterMatrixInputs.forEach(input => {           
+            input.style.backgroundColor = '';
+        });
 
+        const startTime = Date.now(); // Start time
         fetch(endpoint, {
             method: 'POST',
             headers: {
@@ -125,12 +132,18 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('word-count').textContent = `Words returned: ${wordCount}`;
             document.getElementById('info').classList.remove('hidden'); // Show error message
             document.getElementById('error').classList.add('hidden'); // Hide error message
+            document.getElementById('time-taken').classList.remove('hidden'); 
+            document.getElementById('word-count').classList.remove('hidden'); 
+            playBeep();
         })
         .catch((error) => {
             console.error('Error:', error);
             document.getElementById('error').textContent = `Error: ${error.message}`;
             document.getElementById('info').classList.remove('hidden'); // Show error message
             document.getElementById('error').classList.remove('hidden'); // Show error message
+            document.getElementById('time-taken').classList.add('hidden'); 
+            document.getElementById('word-count').classList.add('hidden'); 
+            playBeep();
         });
     });
 
@@ -208,14 +221,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function addResult(column1, column2, column3) {
-        const table = document.getElementById('results-list');
-        const row = table.insertRow();
-        const cell1 = row.insertCell(0);
-        const cell2 = row.insertCell(1);
-        const cell3 = row.insertCell(2);
-        cell1.textContent = column1;
-        cell2.textContent = column2;
-        cell3.textContent = column3;
+    function playBeep() {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4 note
+        gainNode.gain.setValueAtTime(1, audioContext.currentTime);
+
+        oscillator.start();
+        setTimeout(() => {
+            oscillator.stop();
+        }, 400); // Play sound for 200ms
     }
 });
