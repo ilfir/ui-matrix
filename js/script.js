@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('time-taken').textContent = `Time taken: ${timeTaken} ms`;
             document.getElementById('word-count').textContent = `Words returned: ${wordCount}`;
             document.getElementById('info').classList.remove('hidden'); // Show error message
-            document.getElementById('error').classList.add('hidden'); // Hide error message
+            document.getElementById('error').classList.add('hidden'); // Hide error message            
             document.getElementById('time-taken').classList.remove('hidden'); 
             document.getElementById('word-count').classList.remove('hidden'); 
             playBeep();
@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('error').textContent = `Error: ${error.message}`;
             document.getElementById('info').classList.remove('hidden'); // Show error message
             document.getElementById('error').classList.remove('hidden'); // Show error message
+            document.getElementById('error').classList.add('blink'); 
             document.getElementById('time-taken').classList.add('hidden'); 
             document.getElementById('word-count').classList.add('hidden'); 
             playBeep();

@@ -117,3 +117,13 @@ button:hover {
 .hidden {
     display: none;
 }
+
+@keyframes blink {
+    0% { background-color: yellow; }
+    50% { background-color: black; }
+    100% { background-color: pink; }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
