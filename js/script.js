@@ -155,30 +155,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayResults(data) {
         const resultsList = document.getElementById('results-list');
-        resultsList.innerHTML = ''; // Clear previous results
+resultsList.innerHTML = ''; // Clear previous results
 
-        const dataArray = Object.keys(data);
-        const totalItems = dataArray.length;
-        const itemsPerColumn = Math.ceil(totalItems / 3);
-    
-        for (let i = 0; i < itemsPerColumn; i++) {
-            const row = resultsList.insertRow();
-    
-            for (let j = 0; j < 3; j++) {
-                const cell = row.insertCell(j);
-                const dataIndex = i + j * itemsPerColumn;
-    
-                if (dataIndex < totalItems) {
-                    const word = dataArray[dataIndex];
-                    cell.textContent = word;
+const dataArray = Object.keys(data);
+const totalItems = dataArray.length;
+console.log('Total items:', totalItems);
 
-                    // Add click event listener to call a function with the cell item
-                    cell.addEventListener('click', () => {
-                        handleListItemClick(cell);
-                });
-                }
-            }
-        }
+for (let i = 0; i < totalItems; i++) {
+    const row = resultsList.insertRow();
+    const cell = row.insertCell(0); // Always insert at index 0
+
+    if (i < totalItems) {
+        const word = dataArray[i];
+        cell.textContent = word;
+
+        // Add click event listener to call a function with the cell item
+        cell.addEventListener('click', () => {
+            handleListItemClick(cell);
+        });
+    }
+}
     }
 
     function handleListItemClick(listItem) {

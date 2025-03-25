@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>5x5 Letter Matrix</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="hidden" id="info">
@@ -12,7 +13,11 @@
         <p id="word-count">Words: </p>
         <p id="error" class="hidden">Error: </p>
     </div>
-    <button id="settings-button">Settings</button>
+    <div id="all-buttons">
+        <button id="settings-button">Settings</button>
+        <button id="clear-button">Clear</button>
+        <button id="submit-button">Submit</button>
+    </div>
     <table id="letter-matrix">
         <tbody>
             <tr>
@@ -52,10 +57,10 @@
             </tr>
         </tbody>
     </table>
-    <div class="buttons">
+    <!-- <div class="buttons">
         <button id="clear-button">Clear</button>
         <button id="submit-button">Submit</button>
-    </div>
+    </div> -->
     <div id="results">
         <table id="results-table">
         <tbody id="results-list">
