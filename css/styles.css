@@ -1,6 +1,17 @@
+body {
+    overflow-y: hidden; /* Prevent vertical scrolling */
+}
+
 table {
     border-collapse: collapse;
     margin: 20px auto;
+}
+
+#letter-matrix {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin: 0;
 }
 
 #letter-matrix td {
@@ -50,10 +61,13 @@ button:hover {
     background-color: #0056b3;
 }
 
-#settings-button {
+#all-buttons {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 300px;
+    left: 10px;
+}
+
+#settings-button {
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
@@ -74,10 +88,13 @@ button:hover {
 }
 
 #results {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     font-size: 1.2em; /* Adjust the font size as needed */
     margin-top: 20px;
     text-align: center;
-    max-height: 300px; /* Set a fixed height for the results section */
+    max-height: 100%; /* Set a fixed height for the results section */
     overflow-y: auto; /* Enable vertical scrolling */
 }
 
@@ -102,7 +119,7 @@ button:hover {
 
 #info {
     position: absolute;
-    top: 10px;
+    top: 400px;
     left: 10px;
     background-color: white;
     padding: 10px;
