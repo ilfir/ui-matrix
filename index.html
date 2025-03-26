@@ -8,66 +8,76 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div class="hidden" id="info">
-        <p id="time-taken">Time: </p>
-        <p id="word-count">Words: </p>
-        <p id="error" class="hidden">Error: </p>
+    <div id="main-container">
+    <div id="left-container">
+        <table id="letter-matrix">
+            <tbody>
+                <tr>
+                    <td><input type="text" maxlength="1"></td> 
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                    <td><input type="text" maxlength="1"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="all-buttons">
+            <button id="settings-button">Settings</button>
+            <button id="clear-button">Clear</button>
+            <button id="submit-button">Submit</button>
+        </div>
+        <div id="test-buttons">
+            <!-- ...existing content... -->
+            <button id="populate-matrix-button">TEST</button>
+            <button id="randomize-matrix-button">Random</button>
+        </div>
+        <div id="info" class="hidden">
+            <p id="time-taken">Time: </p>
+            <p id="word-count">Words: </p>
+            <p id="error" class="hidden">Error: </p>
+        </div>
     </div>
-    <div id="all-buttons">
-        <button id="settings-button">Settings</button>
-        <button id="clear-button">Clear</button>
-        <button id="submit-button">Submit</button>
-    </div>
-    <table id="letter-matrix">
-        <tbody>
-            <tr>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-                <td><input type="text" maxlength="1"></td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- <div class="buttons">
-        <button id="clear-button">Clear</button>
-        <button id="submit-button">Submit</button>
-    </div> -->
-    <div id="results">
+
+    <div id="right-container">
+        <div id="results">
         <table id="results-table">
-        <tbody id="results-list">
+            <tbody id="results-list">
                 <!-- Rows will be dynamically added here -->
-        </tbody>
+            </tbody>
         </table>
     </div>
-        <script src="js/script.js"></script>
+</div>
+</div>
+
+
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,130 +1,63 @@
-body {
-    overflow-y: hidden; /* Prevent vertical scrolling */
-}
-
-table {
-    border-collapse: collapse;
-    margin: 20px auto;
-}
-
-#letter-matrix {
-    position: absolute;
-    top: 20px;
-    left: 200px;
+/* General reset */
+body, html {
     margin: 0;
-}
-
-#letter-matrix td {
-    border: 2px solid black; /* Changed border color to black */
-    width: 50px; /* Increased width for better visibility */
-    height: 50px; /* Increased height for better visibility */
-    text-align: center;
-    background-color: #E7F1FF; /* Light blue background */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effect */
-}
-
-#letter-matrix td:hover {
-    background-color: #B3D7FF; /* Darker blue on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-#letter-matrix input {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    font-size: 1.5em; /* Increased font size for better readability */
-    border: none;
-    outline: none; /* Remove outline on focus */
-    background-color: transparent; /* Transparent background for input */
-    padding: 0; /* Remove padding */
-    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
-}
-
-.buttons {
-    text-align: center;
-    margin-top: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    font-size: 1em;
-    cursor: pointer;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-#all-buttons {
-    position: absolute;
-    top: 300px;
-    left: 200px;
-}
-
-#settings-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-#settings-button:hover {
-    background-color: #0056b3;
-}
-
-.disabled-button {
-    background-color: grey;
-    cursor: not-allowed;
-}
-
-#results {
-    position: absolute;
-    top: 20px;
-    right: 200px;
-    font-size: 1.5em; /* Adjust the font size as needed */
-    margin-top: 20px;
-    text-align: center;
-    max-height: 100%; /* Set a fixed height for the results section */
-    overflow-y: auto; /* Enable vertical scrolling */
-}
-
-#results-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-#results-table th, #results-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-#results-table tr:nth-child(even) {
+    padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
+    color: #333;    
+    overflow-y: hidden;
 }
 
-#results-table tr:hover {
-    background-color: #ddd;
+/* Ensure the main container takes up the full height */
+#main-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    align-items: flex-start;
+    overflow: hidden; /* Prevent scrolling on the main container */
 }
 
+/* Left container with the matrix */
+#left-container {
+    width: 23%;
+    margin: 20px;
+    height: auto; /* Adjust height to fit content */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: sticky; /* Keep it in view */
+    top: 0; /* Stick to the top of the viewport */
+}
+
+/* Right container with results */
+#right-container {
+    width: 30%; /* Adjust width to take remaining space */
+    margin: 20px;
+    margin-left: 0px;
+    height: 100%; /* Full height of the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Info section styling */
 #info {
-    position: absolute;
-    top: 400px;
-    left: 200px;
-    background-color: white;
+    margin-top: 20px; /* Add space above the info box */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-color: #fff;
+    width: 300px;
+}
+
+/* Info section styling */
+#test-buttons {
+    margin-top: 20px; /* Add space above the info box */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 300px;
 }
 
 #error {
@@ -135,12 +68,150 @@ button:hover {
     display: none;
 }
 
-@keyframes blink {
-    0% { background-color: yellow; }
-    50% { background-color: black; }
-    100% { background-color: pink; }
+/* Button styling (shared between index and settings pages) */
+button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-.blink {
-    animation: blink 1s infinite;
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#all-buttons {
+    display: flex;
+    justify-content: space-between;    
+    width: 330px;
+    margin-top: 10px; /* Add spacing above the buttons */
+}
+
+#clear-button {
+    background-color: lightcoral;
+    color: black; /* Change text color to black */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 110%;
+}
+
+#clear-button:hover {
+    background-color: red;
+}
+
+#submit-button {
+    background-color: rgb(104, 240, 104);
+    color: black; /* Change text color to black */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 110%;
+}
+
+#submit-button:hover {
+    background-color: green;
+}
+
+#settings-button {
+    background-color: rgb(90, 190, 223);
+    color: black; /* Change text color to black */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 110%;
+}
+
+#settings-button:hover {
+    background-color: rgb(3, 132, 175);
+}
+
+#matrix-and-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Aligns buttons to the right edge of the matrix */
+    margin-right: 20px; /* Add spacing between matrix and results */
+}
+
+/* Letter matrix styling */
+#letter-matrix {
+    border-spacing: 5px; /* Add spacing between cells */
+    margin-bottom: 10px;
+    background-color: #e6f7ff; /* Light blue background */
+    padding: 10px; /* Add padding around the matrix */
+    border-radius: 10px; /* Add rounded corners to the matrix */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    width: fit-content; /* Adjust width to match the matrix */
+}
+
+#letter-matrix td {
+    border: 1px solid black; /* Add black borders around cells */
+    width: 50px; /* Increase cell size */
+    height: 50px; /* Increase cell size */
+    text-align: center;
+    background-color: #f0f0f0; /* Add a light background color */
+    border-radius: 5px; /* Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+#letter-matrix input {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: none;
+    font-size: 20px; /* Increase font size */
+    font-weight: bold; /* Make text bold */
+    background-color: transparent; /* Transparent background */
+    outline: none; /* Remove focus outline */
+    cursor: pointer; /* Add pointer cursor */
+    box-sizing: border-box; /* Ensure padding and border are included in width/height */
+    padding: 0; /* Remove padding to prevent overflow */
+    margin: 0; /* Remove margin to prevent overflow */
+}
+
+#letter-matrix input:focus {
+    background-color: #e0e0e0; /* Highlight the cell on focus */
+    outline: 2px solid #007bff; /* Add a blue outline on focus */
+    box-shadow: none; /* Prevent shadow from overflowing */
+}
+
+#results {
+    max-height: none; /* Remove max-height to allow full scrolling */
+    overflow-y: auto; /* Enable scrolling within the results */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #fff;
+}
+
+#results-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#results-table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: left;
+    font-size: 1.5em; /* Increase font size */
+}
+
+#results-table tr:nth-child(odd) {
+    background-color: rgb(245, 245, 245); /* Light grey background for odd rows */
+}
+
+#results-table tr:nth-child(even) {
+    background-color: white; /* White background for even rows */
 }

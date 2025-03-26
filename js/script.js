@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Show or hide the div with the test button based on testSetting
+    const testSetting = localStorage.getItem('testSetting') === 'true'; 
+    const testButtonDiv = document.getElementById('test-buttons');
+    if (testSetting) {
+        testButtonDiv.classList.remove('hidden'); // Show the div
+    } else {
+        testButtonDiv.classList.add('hidden'); // Hide the div
+    }
+
     const inputs = document.querySelectorAll('input[type="text"]');
     const settingsSaved = localStorage.getItem('settingsSaved') === 'true';
 
@@ -46,6 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    if (letterMatrixInputs.length > 0) {
+        letterMatrixInputs[0].focus();
+    }
 
     document.getElementById('clear-button').addEventListener('click', () => {
         letterMatrixInputs.forEach(input => {
@@ -155,27 +169,60 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayResults(data) {
         const resultsList = document.getElementById('results-list');
-resultsList.innerHTML = ''; // Clear previous results
+        resultsList.innerHTML = ''; // Clear previous results
 
-const dataArray = Object.keys(data);
-const totalItems = dataArray.length;
-console.log('Total items:', totalItems);
+        const dataArray = Object.keys(data);
+        const totalItems = dataArray.length;
+        console.log('Total items:', totalItems);
 
-for (let i = 0; i < totalItems; i++) {
-    const row = resultsList.insertRow();
-    const cell = row.insertCell(0); // Always insert at index 0
+        for (let i = 0; i < totalItems; i++) {
+            const row = resultsList.insertRow();
+            const cell = row.insertCell(0); // Always insert at index 0
 
-    if (i < totalItems) {
-        const word = dataArray[i];
-        cell.textContent = word;
+            if (i < totalItems) {
+                const word = dataArray[i];
+                cell.textContent = word;
 
-        // Add click event listener to call a function with the cell item
-        cell.addEventListener('click', () => {
-            handleListItemClick(cell);
+                // Add click event listener to call a function with the cell item
+                cell.addEventListener('click', () => {
+                    handleListItemClick(cell);
+                });
+            }
+        }
+    }
+
+    document.getElementById('populate-matrix-button').addEventListener('click', () => {
+        const matrixData = [
+            'п', 'р', 'е', 'с', 'м', 
+            'н', 'к', 'а', 'е', 'и', 
+            'и', 'п', 'р', 'е', 'с', 
+            'ы', 'к', 'а', 'н', 'и', 
+            'н', 'к', 'а', 'е', 'и', 
+        ];
+    
+        const matrix = document.querySelectorAll('#letter-matrix td input');
+        matrix.forEach((cell, index) => {
+            cell.value = matrixData[index] || ''; // Populate or leave empty if no data
         });
-    }
-}
-    }
+    });
+
+    // Add functionality to the Random button
+    const randomizeButton = document.getElementById('randomize-matrix-button');
+    randomizeButton.addEventListener('click', () => {
+        const inputs = Array.from(document.querySelectorAll('#letter-matrix input'));
+        const letters = inputs.map(input => input.value).filter(letter => letter !== ''); // Collect non-empty letters
+
+        // Shuffle the letters array
+        for (let i = letters.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [letters[i], letters[j]] = [letters[j], letters[i]];
+        }
+
+        // Populate the matrix with shuffled letters
+        inputs.forEach((input, index) => {
+            input.value = letters[index] || ''; // Fill with letters or leave empty
+        });
+    });
 
     function handleListItemClick(listItem) {
         console.log('List item clicked:', listItem.textContent);
