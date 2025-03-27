@@ -16,6 +16,11 @@ body, html {
     height: 100vh; /* Full viewport height */
     align-items: flex-start;
     overflow: hidden; /* Prevent scrolling on the main container */
+    justify-content: space-between; /* Distribute space evenly */
+}
+
+#left-spacer, #right-spacer {
+    flex-grow: 1; /* Allow spacers to take equal space */
 }
 
 /* Left container with the matrix */
