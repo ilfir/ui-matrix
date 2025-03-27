@@ -192,17 +192,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('populate-matrix-button').addEventListener('click', () => {
-        const matrixData = [
-            'п', 'р', 'е', 'с', 'м', 
-            'н', 'к', 'а', 'е', 'и', 
-            'и', 'п', 'р', 'е', 'с', 
-            'ы', 'к', 'а', 'н', 'и', 
-            'н', 'к', 'а', 'е', 'и', 
-        ];
-    
-        const matrix = document.querySelectorAll('#letter-matrix td input');
-        matrix.forEach((cell, index) => {
-            cell.value = matrixData[index] || ''; // Populate or leave empty if no data
+        const russianLetters = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+        const matrixSize = 5;
+        const matrix = [];
+
+        for (let i = 0; i < matrixSize; i++) {
+            const row = [];
+            for (let j = 0; j < matrixSize; j++) {
+                const randomIndex = Math.floor(Math.random() * russianLetters.length);
+                row.push(russianLetters[randomIndex]);
+            }
+            matrix.push(row);
+        }
+
+        const matrixUi = document.querySelectorAll('#letter-matrix td input');
+        matrixUi.forEach((input, index) => {
+            const row = Math.floor(index / matrixSize);
+            const col = index % matrixSize;
+            input.value = matrix[row][col]; // Populate input with matrix data
         });
     });
 
