@@ -253,23 +253,34 @@ document.addEventListener('DOMContentLoaded', function() {
         if (results && results[word]) {
             // Highlight the corresponding cells
             let delay = 0;
+            const positions = [];
+
             for (const index in results[word]) {
                 if (results[word].hasOwnProperty(index)) {
                     const letterData = results[word][index];
-                    // alert(JSON.stringify(letterData));
                     for (const letter in letterData) {
                         if (letterData.hasOwnProperty(letter)) {
                             const position = letterData[letter];
                             const [rowIndex, colIndex] = position.split(' ').map(Number);
                             const cell = document.querySelector(`#letter-matrix tr:nth-child(${rowIndex + 1}) td:nth-child(${colIndex + 1}) input`);
-                            setTimeout(() => {
-                                cell.style.backgroundColor = 'lightgreen';
-                            }, delay);
-                            delay += 200; // Increase delay for the next cell
+                            positions.push(cell);
                         }
                     }
                 }
             }
+
+            positions.forEach((cell, idx) => {
+                setTimeout(() => {
+                    if (idx === 0) {
+                        cell.style.backgroundColor = 'green'; // First cell green
+                    } else if (idx === positions.length - 1) {
+                        cell.style.backgroundColor = 'red'; // Last cell red
+                    } else {
+                        cell.style.backgroundColor = 'lightgreen'; // In-between cells light green
+                    }
+                }, delay);
+                delay += 200; // Increase delay for the next cell
+            });
         }
     }
 
