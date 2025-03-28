@@ -61,18 +61,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const includeExcludeSelect = document.getElementById('include-exclude');
     const dictionaryValueInput = document.getElementById('dictionary-value');
 
+    const queryButton = document.getElementById('send-query');
+    const queryIncludeExcludeSelect = document.getElementById('query-include-exclude');
+    const queryResultsTableBody = document.getElementById('query-results-table').querySelector('tbody');
+
+    function showNotification(message, type = 'info') {
+        const container = document.getElementById('notification-container');
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.padding = '10px 20px';
+        notification.style.marginBottom = '10px';
+        notification.style.borderRadius = '5px';
+        notification.style.color = '#fff';
+        notification.style.backgroundColor = type === 'success' ? '#28a745' : '#dc3545'; // Green for success, red for error
+        notification.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)';
+        container.appendChild(notification);
+
+        setTimeout(() => {
+            container.removeChild(notification);
+        }, 5000); // Remove notification after 5 seconds
+    }
+
     sendButton.addEventListener('click', () => {
         const includeExclude = includeExcludeSelect.value;
         const dictionaryValue = dictionaryValueInput.value;
         const serviceEndpoint = serviceEndpointInput.value;
 
         if (!updateEndpoint) {
-            alert('Please provide a update endpoint.');
+            showNotification('Please provide an update endpoint.', 'error');
             return;
         }
 
         if (!dictionaryValue) {
-            alert('Please enter a value.');
+            showNotification('Please enter a value.', 'error');
             return;
         }
 
@@ -88,27 +109,23 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => {
             if (response.ok) {
-                alert('Value sent successfully.');
+                showNotification('Value sent successfully.', 'success');
             } else {
-                alert('Failed to send value.');
+                showNotification('Failed to send value.', 'error');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred while sending the value.');
+            showNotification('An error occurred while sending the value.', 'error');
         });
     });
-
-    const queryButton = document.getElementById('send-query');
-    const queryIncludeExcludeSelect = document.getElementById('query-include-exclude');
-    const queryResultsTableBody = document.getElementById('query-results-table').querySelector('tbody');
 
     queryButton.addEventListener('click', () => {
         const include = queryIncludeExcludeSelect.value; // Get the dropdown value
         const queryEndpoint = queryEndpointInput.value;
 
         if (!queryEndpoint) {
-            alert('Please provide a query endpoint.');
+            showNotification('Please provide a query endpoint.', 'error');
             return;
         }
 
@@ -128,10 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 queryResultsTableBody.appendChild(row);
             });
+            showNotification('Query completed successfully.', 'success');
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred while querying the dictionary.');
+            showNotification('An error occurred while querying the dictionary.', 'error');
         });
     });
 });
