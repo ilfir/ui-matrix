@@ -221,6 +221,20 @@ button:disabled {
     background-color: white; /* White background for even rows */
 }
 
+.exclude-button {
+    margin-left: 10px;
+    padding: 2px 5px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.exclude-button:hover {
+    background-color: #ff1a1a;
+}
+
 #settings-page {
     padding-left: 20px;
     height: 100vh; /* Full viewport height */

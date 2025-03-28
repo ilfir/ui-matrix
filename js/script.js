@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const endpoint = localStorage.getItem('serviceEndpoint');
         if (!endpoint) {
             console.error('Error: Service endpoint is not set.');
-            alert('Service endpoint is not set. Please configure it in the settings.');
+            showNotification('Service endpoint is not set. Please configure it in the settings.', 'error');
             return;
         }
 
@@ -150,13 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('time-taken').classList.remove('hidden'); 
             document.getElementById('word-count').classList.remove('hidden'); 
             playBeep();
+            showNotification('Matrix submitted successfully!', 'success');
         })
         .catch((error) => {
             console.error('Error:', error);
-            document.getElementById('error').textContent = `Error: ${error.message}`;
-            document.getElementById('info').classList.remove('hidden'); // Show error message
-            document.getElementById('error').classList.remove('hidden'); // Show error message
-            document.getElementById('error').classList.add('blink'); 
+            showNotification(`Error: ${error.message}`, 'error');
             document.getElementById('time-taken').classList.add('hidden'); 
             document.getElementById('word-count').classList.add('hidden'); 
             playBeep();
@@ -177,17 +175,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
         for (let i = 0; i < totalItems; i++) {
             const row = resultsList.insertRow();
-            const cell = row.insertCell(0); // Always insert at index 0
+            const cell = row.insertCell(0); // Word cell
+            const buttonCell = row.insertCell(1); // Button cell
 
-            if (i < totalItems) {
-                const word = dataArray[i];
-                cell.textContent = word;
+            const word = dataArray[i];
+            cell.textContent = word;
 
-                // Add click event listener to call a function with the cell item
-                cell.addEventListener('click', () => {
-                    handleListItemClick(cell);
-                });
-            }
+            // Add "X" button to toggle the word in the excludes list
+            const excludeButton = document.createElement('button');
+            excludeButton.textContent = 'X';
+            excludeButton.classList.add('exclude-button'); // Add a class for styling
+            excludeButton.addEventListener('click', () => {
+                if (excludes.includes(word)) {
+                    excludes = excludes.filter(item => item !== word); // Remove word from excludes
+                    row.style.backgroundColor = ''; // Reset row background color
+                } else {
+                    excludes.push(word); // Add word to excludes
+                    row.style.backgroundColor = 'red'; // Highlight entire row in red
+                }
+                updateSubmitExcludesButton();
+            });
+            buttonCell.appendChild(excludeButton);
+
+            // Add click event listener to call a function with the cell item
+            cell.addEventListener('click', () => {
+                handleListItemClick(cell);
+            });
         }
     }
 
@@ -300,5 +313,79 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             oscillator.stop();
         }, 400); // Play sound for 200ms
+    }
+
+    let excludes = []; // Array to store excluded words
+    const submitExcludesButton = document.getElementById('submit-excludes-button');
+
+    function updateSubmitExcludesButton() {
+        if (excludes.length > 0) {
+            submitExcludesButton.classList.remove('hidden');
+        } else {
+            submitExcludesButton.classList.add('hidden');
+        }
+    }
+
+    // Clear excludes array on specific button presses
+    ['clear-button', 'submit-button', 'settings-button', 'populate-matrix-button', 'randomize-matrix-button'].forEach(buttonId => {
+        document.getElementById(buttonId).addEventListener('click', () => {
+            excludes = [];
+            updateSubmitExcludesButton();
+        });
+    });
+
+    // Handle Submit Excludes button click
+    submitExcludesButton.addEventListener('click', () => {
+        const updateEndpoint = localStorage.getItem('updateEndpoint');
+        if (!updateEndpoint) {
+            console.error('Error: Update endpoint is not set.');
+            showNotification('Update endpoint is not set. Please configure it in the settings.', 'error');
+            return;
+        }
+
+        const data = { 
+            words: excludes,
+            include: false }; // Prepare the data to be sent
+        console.log('Submitting excludes:', excludes);
+
+        fetch(updateEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(responseData => {
+            console.log('Excludes submitted successfully:', responseData);
+            showNotification('Excludes submitted successfully!', 'success');
+        })
+        .catch(error => {
+            console.error('Error submitting excludes:', error);
+            showNotification(`Error submitting excludes: ${error.message}`, 'error');
+        });
+    });
+
+    function showNotification(message, type = 'info') {
+        const container = document.getElementById('notification-container');
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.padding = '10px 20px';
+        notification.style.marginBottom = '10px';
+        notification.style.borderRadius = '5px';
+        notification.style.color = '#fff';
+        notification.style.backgroundColor = type === 'success' ? '#28a745' : '#dc3545'; // Green for success, red for error
+        notification.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)';
+        container.appendChild(notification);
+
+        setTimeout(() => {
+            container.removeChild(notification);
+        }, 5000); // Remove notification after 5 seconds
     }
 });
