@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let excludes = []; // Array to store excluded words
-    const submitExcludesButton = document.getElementById('submit-excludes-button');
+    const submitExcludesButton = document.getElementById('exclude-button');
 
     function updateSubmitExcludesButton() {
         if (excludes.length > 0) {

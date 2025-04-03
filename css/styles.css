@@ -55,8 +55,17 @@ body, html {
     width: 300px;
 }
 
-/* Info section styling */
 #test-buttons {
+    margin-top: 20px; /* Add space above the info box */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 300px;
+}
+
+
+#exclude-button {
     margin-top: 20px; /* Add space above the info box */
     padding: 10px;
     border: 1px solid #ccc;
@@ -263,6 +272,12 @@ button:disabled {
     border-radius: 5px;
     background-color: #fff;
     margin-bottom: 20px;
+}
+
+#query-results-table {
+    width: 100%; 
+    border: 1px;
+    border-collapse: collapse;
 }
 
 #query-results-table th, #query-results-table td {
