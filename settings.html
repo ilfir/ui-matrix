@@ -64,7 +64,11 @@
             <button type="button" id="send-query">Query</button>
         </form>
         <br>
-        <table id="query-results-table" border="1" style="width: 100%; border-collapse: collapse;">
+        <table id="query-results-table" hidden border="1">
+            <thead>
+                <tr>
+                    <th>Word</th>
+                </tr>
             <tbody>
                 <!-- Query results will be dynamically inserted here -->
             </tbody>

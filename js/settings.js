@@ -151,5 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error);
             showNotification('An error occurred while querying the dictionary.', 'error');
         });
+        document.getElementById('query-results-table').style.display = 'table';
     });
 });
