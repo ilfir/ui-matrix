@@ -40,29 +40,50 @@
             <button type="submit">Save</button>
             <button type="button" id="back-button">Back</button>
         </form>
-        <h2>Update Dictionary</h2>
-        <form id="update-dictionary-form">
-            <label for="include-exclude">Included/Excluded:</label>
-            <select id="include-exclude" name="include-exclude">
-                <option value="include">Include</option>
-                <option value="exclude">Exclude</option>
-            </select>
-            <br><br>
-            <label for="dictionary-value">Value:</label>
-            <input type="text" id="dictionary-value" name="dictionary-value" placeholder="Enter value">
-            <br><br>
-            <button type="button" id="send-dictionary-value">Send</button>
-        </form>
-        <h2>Query Dictionary</h2>
-        <form id="query-dictionary-form">
-            <label for="query-include-exclude">Included/Excluded:</label>
-            <select id="query-include-exclude" name="query-include-exclude">
-                <option value="include">Include</option>
-                <option value="exclude">Exclude</option>
-            </select>
-            <br><br>
-            <button type="button" id="send-query">Query</button>
-        </form>
+        <div id="dictionary-forms-container" style="display: flex; gap: 20px;">
+            <div id="update-dictionary-section">
+                <h2>Update</h2>
+                <form id="update-dictionary-form">
+                    <label for="include-exclude">Included/Excluded:</label>
+                    <select id="include-exclude" name="include-exclude">
+                        <option value="include">Include</option>
+                        <option value="exclude">Exclude</option>
+                    </select>
+                    <br><br>
+                    <label for="dictionary-value">Value:</label>
+                    <input type="text" id="dictionary-value" name="dictionary-value" placeholder="Enter value">
+                    <br><br>
+                    <button type="button" id="send-dictionary-value">Send</button>
+                </form>
+            </div>
+            <div id="list-dictionary-section">
+                <h2>List</h2>
+                <form id="query-dictionary-form">
+                    <label for="query-include-exclude">Included/Excluded:</label>
+                    <select id="query-include-exclude" name="query-include-exclude">
+                        <option value="include">Include</option>
+                        <option value="exclude">Exclude</option>
+                    </select>
+                    <br><br>
+                    <button type="button" id="send-query">Query</button>
+                </form>
+            </div>
+            <div id="query-word-section">
+                <h2>Query</h2>
+                <form id="query-word-form">
+                    <label for="query-text">Search Text:</label>
+                    <input type="text" id="query-text" name="query-text" placeholder="Enter text to search">
+                    <br><br>
+                    <label foro="query-word">Exact/Wildcard:</label>
+                    <select id="query-exact" name="query-exact">
+                        <option value="true">Exact</option>
+                        <option value="false">Wildcard</option>
+                    </select>
+                    <br><br>
+                    <button type="button" id="serch-query">Search</button>
+                </form>
+            </div>
+        </div>
         <br>
         <table id="query-results-table" hidden border="1">
             <thead>

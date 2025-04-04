@@ -274,6 +274,14 @@ button:disabled {
     margin-bottom: 20px;
 }
 
+#query-word-form {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+
 #query-results-table {
     width: 100%; 
     border: 1px;
