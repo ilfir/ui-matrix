@@ -31,6 +31,10 @@
             <input type="text" id="query-endpoint" name="query-endpoint" placeholder="Enter query endpoint" 
             style="width: 300px" value="http://192.168.1.7:8080/Words/List">
             <br><br>
+            <label for="lookup-endpoint">Lookup Endpoint:</label>
+            <input type="text" id="lookup-endpoint" name="lookup-endpoint" placeholder="Enter lookup endpoint" 
+            style="width: 300px" value="http://192.168.1.7:8080/Words/LookupWord">
+            <br><br>
             <label for="test-setting">Test:</label>
             <select id="test-setting" name="test-setting">
                 <option value="true">True</option>
@@ -85,13 +89,27 @@
             </div>
         </div>
         <br>
-        <table id="query-results-table" hidden border="1">
+        <table id="list-results-table" hidden border="1">
             <thead>
                 <tr>
                     <th>Word</th>
                 </tr>
             <tbody>
                 <!-- Query results will be dynamically inserted here -->
+            </tbody>
+        </table>
+        <table id="lookup-results-table" hidden border="1">
+            <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Included</th>
+                    <th>Excluded</th>
+                    <th>Dictionary</th>
+                    <th>Merged</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Lookup results will be dynamically inserted here -->
             </tbody>
         </table>
     </div>

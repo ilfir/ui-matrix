@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const testSettingInput = document.getElementById('test-setting'); // Get the test-setting element
     const updateEndpointInput = document.getElementById('update-endpoint');
     const queryEndpointInput = document.getElementById('query-endpoint');
+    const lookupEndpointInput = document.getElementById('lookup-endpoint'); // Get the lookup-endpoint element
 
     // Retrieve values from local storage
     const minLength = localStorage.getItem('minLength');
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const testSetting = localStorage.getItem('testSetting'); // Retrieve test-setting value
     const updateEndpoint = localStorage.getItem('updateEndpoint');
     const queryEndpoint = localStorage.getItem('queryEndpoint');
+    const lookupEndpoint = localStorage.getItem('lookupEndpoint'); // Retrieve lookup endpoint from local storage
 
     // Set the form fields with the retrieved values
     if (minLength !== null) minLengthInput.value = minLength;
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (testSetting) testSettingInput.value = testSetting; // Set the test-setting value
     if (updateEndpoint) updateEndpointInput.value = updateEndpoint;
     if (queryEndpoint) queryEndpointInput.value = queryEndpoint;
+    if (lookupEndpoint) lookupEndpointInput.value = lookupEndpoint; // Set the form field with the retrieved value
 
     const settingsForm = document.getElementById('settings-form');
 
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const testSetting = document.getElementById('test-setting').value; // Get the test-setting value
         const updateEndpoint = document.getElementById('update-endpoint').value;
         const queryEndpoint = document.getElementById('query-endpoint').value;
+        const lookupEndpoint = document.getElementById('lookup-endpoint').value; // Get the lookup-endpoint value
 
         // Save values to local storage
         localStorage.setItem('minLength', minLength);
@@ -48,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('testSetting', testSetting); // Save the test-setting value
         localStorage.setItem('updateEndpoint', updateEndpoint);
         localStorage.setItem('queryEndpoint', queryEndpoint);
+        localStorage.setItem('lookupEndpoint', lookupEndpoint); // Save lookup endpoint to local storage
 
         window.location.href = 'index.html';
     });
@@ -63,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const queryButton = document.getElementById('send-query');
     const queryIncludeExcludeSelect = document.getElementById('query-include-exclude');
-    const queryResultsTableBody = document.getElementById('query-results-table').querySelector('tbody');
+    const queryResultsTableBody = document.getElementById('list-results-table').querySelector('tbody');
 
     function showNotification(message, type = 'info') {
         const container = document.getElementById('notification-container');
@@ -137,6 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear existing table rows
             queryResultsTableBody.innerHTML = '';
 
+            document.getElementById('lookup-results-table').style.display = 'none';
+
             // Populate table with query results
             data.forEach(item => {
                 const row = document.createElement('tr');
@@ -151,6 +158,74 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error);
             showNotification('An error occurred while querying the dictionary.', 'error');
         });
-        document.getElementById('query-results-table').style.display = 'table';
+        document.getElementById('list-results-table').style.display = 'table';
+    });
+
+    const searchButton = document.getElementById('serch-query');
+    const queryTextInput = document.getElementById('query-text');
+    const queryExactSelect = document.getElementById('query-exact');
+    const lookupResultsTableBody = document.getElementById('lookup-results-table').querySelector('tbody');
+
+    searchButton.addEventListener('click', () => {
+        const queryText = queryTextInput.value;
+        const exactMatch = queryExactSelect.value === 'true';
+        const lookupEndpoint = lookupEndpointInput.value; // Use the lookup endpoint value
+
+        if (!queryText) {
+            showNotification('Please enter a search text.', 'error');
+            return;
+        }
+
+        if (!lookupEndpoint) {
+            showNotification('Please provide a lookup endpoint.', 'error');
+            return;
+        }
+
+        fetch(`${lookupEndpoint}?word=${encodeURIComponent(queryText)}&exactMatch=${exactMatch}`, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+
+             // Clear existing table rows
+             lookupResultsTableBody.innerHTML = '';
+
+            if(data.length === 1 && data[0].location === 'Error') {
+                showNotification(data[0].word, 'error');
+                return;
+            }
+
+            // Ensure only one row per word, with multiple columns checked if applicable
+            const wordMap = new Map();
+            data.forEach(item => {                
+                if (!wordMap.has(item.word)) {
+                    wordMap.set(item.word, new Set());
+                }
+                wordMap.get(item.word).add(item.location);
+            });
+
+            // Populate table with results
+            wordMap.forEach((locations, word) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${word}</td>
+                    <td>${locations.has('Included') ? '✔' : ''}</td>
+                    <td>${locations.has('Excluded') ? '✔' : ''}</td>
+                    <td>${locations.has('Dictionary') ? '✔' : ''}</td>
+                    <td>${locations.has('Merged') ? '✔' : ''}</td>
+                `;
+                lookupResultsTableBody.appendChild(row);
+            });
+
+            // Show the table
+            document.getElementById('lookup-results-table').hidden = false;
+            document.getElementById('lookup-results-table').style.display = 'table';
+            showNotification('Search completed successfully.', 'success');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('An error occurred while performing the lookup.', 'error');
+        });
+        document.getElementById('list-results-table').style.display = 'none';
     });
 });

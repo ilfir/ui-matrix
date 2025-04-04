@@ -282,26 +282,52 @@ button:disabled {
     margin-bottom: 20px;
 }
 
-#query-results-table {
+#list-results-table {
     width: 100%; 
     border: 1px;
     border-collapse: collapse;
 }
 
-#query-results-table th, #query-results-table td {
+#list-results-table th, #list-results-table td {
     padding: 10px;
     text-align: left;
+    border: 1px solid #ccc;
 }
 
-#query-results-table th {
+#list-results-table th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
 
-#query-results-table tr:nth-child(odd) {
+#list-results-table tr:nth-child(odd) {
     background-color: #ffffff; /* White background for odd rows */
 }
 
-#query-results-table tr:nth-child(even) {
+#list-results-table tr:nth-child(even) {
     background-color: #f9f9f9; /* Very light grey background for even rows */
+}
+
+#lookup-results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#lookup-results-table th, #lookup-results-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+#lookup-results-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+#lookup-results-table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#lookup-results-table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
