@@ -149,7 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('error').classList.add('hidden'); // Hide error message            
             document.getElementById('time-taken').classList.remove('hidden'); 
             document.getElementById('word-count').classList.remove('hidden'); 
-            playBeep();
+            // Commenting out for now
+            // playBeep();
             showNotification('Matrix submitted successfully!', 'success');
         })
         .catch((error) => {
