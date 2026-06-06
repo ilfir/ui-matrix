@@ -390,6 +390,10 @@ button:disabled:hover {
     transition: background-color var(--transition-fast);
 }
 
+#results-table td:last-child {
+     text-align: right;
+}
+
 #results-table td:hover {
      background-color: var(--color-surface-hover);
 }
