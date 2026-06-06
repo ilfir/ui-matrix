@@ -59,9 +59,10 @@ var Results = (function() {
         if (letterMatrixInputs && letterMatrixInputs.length > 0) {
             letterMatrixInputs.forEach(function(input) {
                 input.style.backgroundColor = '';
-               });
-             }
-          }
+                input.style.color = '';
+                });
+              }
+           }
 
     function highlightWordInMatrix(word) {
         var results = Storage.getResults();
