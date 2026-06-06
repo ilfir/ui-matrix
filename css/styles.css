@@ -196,6 +196,31 @@ body, html {
     font-weight: 400;
 }
 
+/* Animation overlay number badge */
+#letter-matrix td.animating {
+     position: relative;
+}
+
+#letter-matrix td.animating::after {
+     content: attr(data-order);
+    position: absolute;
+    bottom: 2px;
+    right: 3px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(99, 102, 241, 0.9);
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 10;
+}
+
 /* ============================================
    Button Styles
    ============================================ */

@@ -124,23 +124,27 @@ var Results = (function() {
                     var timer = setTimeout(function() {
                         if (!animationRunning) return;
                         
+                         // Add animation overlay class with order number
+                        cell.parentElement.classList.add('animating');
+                        cell.parentElement.setAttribute('data-order', (idx + 1).toString());
+                        
                          if (idx === 0) {
                             // First letter: yellowish background with dark text
                             cell.style.backgroundColor = '#FDE68A';
                             cell.style.color = '#422006';
                             } else if (idx === positions.length - 1) {
-                             // Last letter: pink/red background with dark text
+                              // Last letter: pink/red background with dark text
                             cell.style.backgroundColor = '#FCA5A5';
                             cell.style.color = '#450a0a';
                             } else {
-                             // Middle letters: light green background with dark text
+                              // Middle letters: light green background with dark text
                             cell.style.backgroundColor = '#86EFAC';
                             cell.style.color = '#064e3b';
                             }
-                          }, idx * 200);
+                           }, idx * 200);
                         animationTimers.push(timer);
-                       })(positions[i], i);
-                    }
+                        })(positions[i], i);
+                     }
 
                  var lastTimer = setTimeout(function() {
                     if (!animationRunning) return;
