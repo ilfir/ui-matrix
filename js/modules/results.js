@@ -1,8 +1,11 @@
 var Results = (function() {
-    'use strict';
+     'use strict';
 
     var resultsList;
     var letterMatrixInputs;
+    var animationTimers = [];
+    var animationRunning = false;
+    var currentWordPositions = [];
 
     function init() {
         resultsList = document.getElementById('results-list');
@@ -28,38 +31,44 @@ var Results = (function() {
             excludeButton.className = 'exclude-button';
             excludeButton.setAttribute('aria-label', 'Exclude ' + word);
 
-            (function(word, row) {
+             (function(word, row) {
                 excludeButton.addEventListener('click', function() {
                     if (Matrix.isExcluded(word)) {
                         Matrix.removeExclude(word);
                         row.style.backgroundColor = '';
-                      } else {
+                       } else {
                         Matrix.addExclude(word);
                         row.style.backgroundColor = '#ffe0e0';
-                      }
+                       }
                     updateSubmitExcludesButton();
-                  });
-              })(word, row);
+                   });
+               })(word, row);
 
             buttonCell.appendChild(excludeButton);
 
-            (function(word) {
+             (function(word) {
                 wordCell.addEventListener('click', function() {
+                    stopAnimation();
                     highlightWordInMatrix(word);
-                  });
-              })(word);
-            }
+                   });
+               })(word);
+             }
+           }
+
+    function clearHighlights() {
+        if (letterMatrixInputs && letterMatrixInputs.length > 0) {
+            letterMatrixInputs.forEach(function(input) {
+                input.style.backgroundColor = '';
+               });
+             }
           }
 
     function highlightWordInMatrix(word) {
         var results = Storage.getResults();
         
-        // Clear previous highlights
-        if (letterMatrixInputs && letterMatrixInputs.length > 0) {
-            letterMatrixInputs.forEach(function(input) {
-                input.style.backgroundColor = '';
-              });
-            }
+         // Clear previous highlights and any running animation
+        clearHighlights();
+        stopAnimation();
 
         if (results && results[word]) {
             var positions = [];
@@ -75,105 +84,155 @@ var Results = (function() {
                             var rowIndex = parseInt(parts[0], 10);
                             var colIndex = parseInt(parts[1], 10);
                             var cell = document.querySelector(
-                                '#letter-matrix tr:nth-child(' + (rowIndex + 1) + ') td:nth-child(' + (colIndex + 1) + ') input'
-                              );
+                                 '#letter-matrix tr:nth-child(' + (rowIndex + 1) + ') td:nth-child(' + (colIndex + 1) + ') input'
+                               );
                             if (cell) {
                                 positions.push(cell);
-                              }
-                            }
-                          }
-                        }
-                      }
+                               }
+                             }
+                           }
+                         }
+                       }
 
-            positions.forEach(function(cell, idx) {
-                (function(cell, idx) {
-                    setTimeout(function() {
-                        if (idx === 0) {
-                            cell.style.backgroundColor = '#90EE90';
-                          } else if (idx === positions.length - 1) {
-                            cell.style.backgroundColor = '#FFB6C1';
-                          } else {
-                            cell.style.backgroundColor = '#98FB98';
-                          }
-                        }, idx * 200);
-                      })(cell, idx);
-                });
-              }
-        }
+            if (positions.length > 0) {
+                currentWordPositions = positions;
+                animationRunning = true;
+                playAnimationLoop(positions);
+               }
+             }
+           }
+
+    function playAnimationLoop(positions) {
+        clearHighlights();
+        
+         // Clear any existing timers
+        animationTimers.forEach(function(timer) {
+            clearTimeout(timer);
+           });
+        animationTimers = [];
+
+         var totalDuration = positions.length * 200 + 500;
+
+         function playOnce() {
+            if (!animationRunning) return;
+
+            clearHighlights();
+
+             for (var i = 0; i < positions.length; i++) {
+                 (function(cell, idx) {
+                    var timer = setTimeout(function() {
+                        if (!animationRunning) return;
+                        
+                         if (idx === 0) {
+                            // First letter: yellowish
+                            cell.style.backgroundColor = '#FDE68A';
+                           } else if (idx === positions.length - 1) {
+                            // Last letter: pink/red
+                            cell.style.backgroundColor = '#FCA5A5';
+                           } else {
+                            // Middle letters: light green
+                            cell.style.backgroundColor = '#86EFAC';
+                           }
+                         }, idx * 200);
+                        animationTimers.push(timer);
+                      })(positions[i], i);
+                   }
+
+                 var lastTimer = setTimeout(function() {
+                    if (!animationRunning) return;
+                     // Brief pause before replay
+                    var replayTimer = setTimeout(playOnce, 500);
+                    animationTimers.push(replayTimer);
+                  }, totalDuration);
+                animationTimers.push(lastTimer);
+               }
+
+            playOnce();
+           }
+
+    function stopAnimation() {
+        animationRunning = false;
+        animationTimers.forEach(function(timer) {
+            clearTimeout(timer);
+           });
+        animationTimers = [];
+        clearHighlights();
+       }
 
     function clearResults() {
+        stopAnimation();
         if (resultsList) {
             resultsList.innerHTML = '';
             Storage.clearResults();
-            }
-          }
+             }
+           }
 
     function updateSubmitExcludesButton() {
         var submitExcludesButton = document.getElementById('exclude-button');
         if (submitExcludesButton) {
             if (Matrix.getExcludes().length > 0) {
                 submitExcludesButton.classList.remove('hidden');
-              } else {
+               } else {
                 submitExcludesButton.classList.add('hidden');
-              }
-            }
-          }
+               }
+             }
+           }
 
     function hideInfo() {
         var info = document.getElementById('info');
         if (info) {
             info.classList.add('hidden');
-            }
-          }
+             }
+           }
 
     function showInfo() {
         var info = document.getElementById('info');
         if (info) {
             info.classList.remove('hidden');
-            }
-          }
+             }
+           }
 
     function hideTimeTaken() {
         var timeTaken = document.getElementById('time-taken');
         if (timeTaken) {
             timeTaken.classList.add('hidden');
-            }
-          }
+             }
+           }
 
     function showTimeTaken() {
         var timeTaken = document.getElementById('time-taken');
         if (timeTaken) {
             timeTaken.classList.remove('hidden');
-            }
-          }
+             }
+           }
 
     function hideWordCount() {
         var wordCount = document.getElementById('word-count');
         if (wordCount) {
             wordCount.classList.add('hidden');
-            }
-          }
+             }
+           }
 
     function showWordCount() {
         var wordCount = document.getElementById('word-count');
         if (wordCount) {
             wordCount.classList.remove('hidden');
-            }
-          }
+             }
+           }
 
     function setTimeTaken(time) {
         var timeTaken = document.getElementById('time-taken');
         if (timeTaken) {
             timeTaken.textContent = 'Time taken: ' + time + ' ms';
-            }
-          }
+             }
+           }
 
     function setWordCount(count) {
         var wordCount = document.getElementById('word-count');
         if (wordCount) {
             wordCount.textContent = 'Words returned: ' + count;
-            }
-          }
+             }
+           }
 
     return {
         init: init,
@@ -187,6 +246,7 @@ var Results = (function() {
         hideWordCount: hideWordCount,
         showWordCount: showWordCount,
         setTimeTaken: setTimeTaken,
-        setWordCount: setWordCount
-        };
-      })();
+        setWordCount: setWordCount,
+        stopAnimation: stopAnimation
+         };
+       })();
