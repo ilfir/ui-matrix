@@ -1,88 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5x5 Letter Matrix</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>5x5 Letter Matrix - Word Search</title>
+     <link rel="stylesheet" href="css/styles.css">
+     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div id="main-container">
-    <div id="left-spacer"></div>
-    <div id="left-container">
-        <table id="letter-matrix">
-            <tbody>
-                <tr>
-                    <td><input type="text" maxlength="1"></td> 
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                    <td><input type="text" maxlength="1"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div id="all-buttons">
-            <button id="settings-button">Settings</button>
-            <button id="clear-button">Clear</button>
-            <button id="submit-button">Search</button>
-        </div>
-        <div id="test-buttons">
-            <button id="populate-matrix-button">Populate</button>
-            <button id="randomize-matrix-button">Randomize</button>
-        </div>
-        <div id="info" class="hidden">
-            <p id="time-taken">Time: </p>
-            <p id="word-count">Words: </p>
-            <p id="error" class="hidden">Error: </p>
-        </div>
-        <div id="exclude-button" class="hidden">
-            <button id="submit-excludes-button">Submit Excludes</button>
-        </div>
-    </div>
+     <div id="main-container">
+          <div id="left-spacer"></div>
+          <div id="left-container">
+               <h1 style="font-size: 1.5rem; font-weight: 600; color: var(--color-text); margin-bottom: var(--spacing-md); text-align: center;">Letter Matrix</h1>
+               <table id="letter-matrix" aria-label="5x5 Letter Matrix for word search">
+                    <tbody>
+                         <tr>
+                              <td><input type="text" maxlength="1" placeholder="A" aria-label="Row 1, Column 1"></td> 
+                              <td><input type="text" maxlength="1" placeholder="B" aria-label="Row 1, Column 2"></td>
+                              <td><input type="text" maxlength="1" placeholder="C" aria-label="Row 1, Column 3"></td>
+                              <td><input type="text" maxlength="1" placeholder="D" aria-label="Row 1, Column 4"></td>
+                              <td><input type="text" maxlength="1" placeholder="E" aria-label="Row 1, Column 5"></td>
+                         </tr>
+                         <tr>
+                              <td><input type="text" maxlength="1" placeholder="F" aria-label="Row 2, Column 1"></td>
+                              <td><input type="text" maxlength="1" placeholder="G" aria-label="Row 2, Column 2"></td>
+                              <td><input type="text" maxlength="1" placeholder="H" aria-label="Row 2, Column 3"></td>
+                              <td><input type="text" maxlength="1" placeholder="I" aria-label="Row 2, Column 4"></td>
+                              <td><input type="text" maxlength="1" placeholder="J" aria-label="Row 2, Column 5"></td>
+                         </tr>
+                         <tr>
+                              <td><input type="text" maxlength="1" placeholder="K" aria-label="Row 3, Column 1"></td>
+                              <td><input type="text" maxlength="1" placeholder="L" aria-label="Row 3, Column 2"></td>
+                              <td><input type="text" maxlength="1" placeholder="M" aria-label="Row 3, Column 3"></td>
+                              <td><input type="text" maxlength="1" placeholder="N" aria-label="Row 3, Column 4"></td>
+                              <td><input type="text" maxlength="1" placeholder="O" aria-label="Row 3, Column 5"></td>
+                         </tr>
+                         <tr>
+                              <td><input type="text" maxlength="1" placeholder="P" aria-label="Row 4, Column 1"></td>
+                              <td><input type="text" maxlength="1" placeholder="Q" aria-label="Row 4, Column 2"></td>
+                              <td><input type="text" maxlength="1" placeholder="R" aria-label="Row 4, Column 3"></td>
+                              <td><input type="text" maxlength="1" placeholder="S" aria-label="Row 4, Column 4"></td>
+                              <td><input type="text" maxlength="1" placeholder="T" aria-label="Row 4, Column 5"></td>
+                         </tr>
+                         <tr>
+                              <td><input type="text" maxlength="1" placeholder="U" aria-label="Row 5, Column 1"></td>
+                              <td><input type="text" maxlength="1" placeholder="V" aria-label="Row 5, Column 2"></td>
+                              <td><input type="text" maxlength="1" placeholder="W" aria-label="Row 5, Column 3"></td>
+                              <td><input type="text" maxlength="1" placeholder="X" aria-label="Row 5, Column 4"></td>
+                              <td><input type="text" maxlength="1" placeholder="Y" aria-label="Row 5, Column 5"></td>
+                         </tr>
+                    </tbody>
+               </table>
+               <div id="all-buttons">
+                    <button id="settings-button" aria-label="Open settings">Settings</button>
+                    <button id="clear-button" aria-label="Clear all matrix cells">Clear</button>
+                    <button id="submit-button" aria-label="Search words in matrix">Search</button>
+               </div>
+               <div id="test-buttons" class="hidden">
+                    <button id="populate-matrix-button">Populate</button>
+                    <button id="randomize-matrix-button">Randomize</button>
+               </div>
+               <div id="info" class="hidden" role="status" aria-live="polite">
+                    <p id="time-taken">Time: </p>
+                    <p id="word-count">Words: </p>
+                    <p id="error" class="hidden">Error: </p>
+               </div>
+               <div id="exclude-button" class="hidden">
+                    <button id="submit-excludes-button">Submit Excludes</button>
+               </div>
+          </div>
 
-    <div id="right-container">
-        <div id="results">
-        <table id="results-table">
-            <tbody id="results-list">
-                <!-- Rows will be dynamically added here -->
-            </tbody>
-        </table>
-        </div>
-    </div>
-    <div id="right-spacer"></div>
-</div>
+          <div id="right-container">
+               <h2 style="font-size: 1.25rem; font-weight: 600; color: var(--color-text); margin-bottom: var(--spacing-md);">Results</h2>
+               <div id="results">
+                    <table id="results-table">
+                         <tbody id="results-list">
+                              <!-- Rows will be dynamically added here -->
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+          <div id="right-spacer"></div>
+     </div>
 
-<div id="notification-container" style="position: fixed; top: 10px; right: 10px; z-index: 1000;"></div>
- 
-    <script src="js/script.js"></script>
+     <div id="notification-container" style="position: fixed; top: 10px; right: 10px; z-index: 1000;"></div>
+      
+     <script src="js/modules/storage.js"></script>
+     <script src="js/modules/utils.js"></script>
+     <script src="js/modules/api.js"></script>
+     <script src="js/modules/matrix.js"></script>
+     <script src="js/modules/results.js"></script>
+     <script src="js/script.js"></script>
 </body>
 </html>
