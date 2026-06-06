@@ -124,19 +124,22 @@ var Results = (function() {
                         if (!animationRunning) return;
                         
                          if (idx === 0) {
-                            // First letter: yellowish
+                            // First letter: yellowish background with dark text
                             cell.style.backgroundColor = '#FDE68A';
-                           } else if (idx === positions.length - 1) {
-                            // Last letter: pink/red
+                            cell.style.color = '#422006';
+                            } else if (idx === positions.length - 1) {
+                             // Last letter: pink/red background with dark text
                             cell.style.backgroundColor = '#FCA5A5';
-                           } else {
-                            // Middle letters: light green
+                            cell.style.color = '#450a0a';
+                            } else {
+                             // Middle letters: light green background with dark text
                             cell.style.backgroundColor = '#86EFAC';
-                           }
-                         }, idx * 200);
+                            cell.style.color = '#064e3b';
+                            }
+                          }, idx * 200);
                         animationTimers.push(timer);
-                      })(positions[i], i);
-                   }
+                       })(positions[i], i);
+                    }
 
                  var lastTimer = setTimeout(function() {
                     if (!animationRunning) return;
