@@ -1,0 +1,192 @@
+var Results = (function() {
+    'use strict';
+
+    var resultsList;
+    var letterMatrixInputs;
+
+    function init() {
+        resultsList = document.getElementById('results-list');
+        letterMatrixInputs = Matrix.getInputs();
+       }
+
+    function displayResults(data) {
+        resultsList.innerHTML = '';
+
+        var dataArray = Object.keys(data);
+        var totalItems = dataArray.length;
+
+        for (var i = 0; i < totalItems; i++) {
+            var word = dataArray[i];
+            var row = resultsList.insertRow();
+            var wordCell = row.insertCell(0);
+            var buttonCell = row.insertCell(1);
+
+            wordCell.textContent = word;
+
+            var excludeButton = document.createElement('button');
+            excludeButton.textContent = 'X';
+            excludeButton.className = 'exclude-button';
+            excludeButton.setAttribute('aria-label', 'Exclude ' + word);
+
+            (function(word, row) {
+                excludeButton.addEventListener('click', function() {
+                    if (Matrix.isExcluded(word)) {
+                        Matrix.removeExclude(word);
+                        row.style.backgroundColor = '';
+                      } else {
+                        Matrix.addExclude(word);
+                        row.style.backgroundColor = '#ffe0e0';
+                      }
+                    updateSubmitExcludesButton();
+                  });
+              })(word, row);
+
+            buttonCell.appendChild(excludeButton);
+
+            (function(word) {
+                wordCell.addEventListener('click', function() {
+                    highlightWordInMatrix(word);
+                  });
+              })(word);
+            }
+          }
+
+    function highlightWordInMatrix(word) {
+        var results = Storage.getResults();
+        
+        // Clear previous highlights
+        if (letterMatrixInputs && letterMatrixInputs.length > 0) {
+            letterMatrixInputs.forEach(function(input) {
+                input.style.backgroundColor = '';
+              });
+            }
+
+        if (results && results[word]) {
+            var positions = [];
+            var wordData = results[word];
+
+            for (var index in wordData) {
+                if (wordData.hasOwnProperty(index)) {
+                    var letterData = wordData[index];
+                    for (var letter in letterData) {
+                        if (letterData.hasOwnProperty(letter)) {
+                            var position = letterData[letter];
+                            var parts = position.split(' ');
+                            var rowIndex = parseInt(parts[0], 10);
+                            var colIndex = parseInt(parts[1], 10);
+                            var cell = document.querySelector(
+                                '#letter-matrix tr:nth-child(' + (rowIndex + 1) + ') td:nth-child(' + (colIndex + 1) + ') input'
+                              );
+                            if (cell) {
+                                positions.push(cell);
+                              }
+                            }
+                          }
+                        }
+                      }
+
+            positions.forEach(function(cell, idx) {
+                (function(cell, idx) {
+                    setTimeout(function() {
+                        if (idx === 0) {
+                            cell.style.backgroundColor = '#90EE90';
+                          } else if (idx === positions.length - 1) {
+                            cell.style.backgroundColor = '#FFB6C1';
+                          } else {
+                            cell.style.backgroundColor = '#98FB98';
+                          }
+                        }, idx * 200);
+                      })(cell, idx);
+                });
+              }
+        }
+
+    function clearResults() {
+        if (resultsList) {
+            resultsList.innerHTML = '';
+            Storage.clearResults();
+            }
+          }
+
+    function updateSubmitExcludesButton() {
+        var submitExcludesButton = document.getElementById('exclude-button');
+        if (submitExcludesButton) {
+            if (Matrix.getExcludes().length > 0) {
+                submitExcludesButton.classList.remove('hidden');
+              } else {
+                submitExcludesButton.classList.add('hidden');
+              }
+            }
+          }
+
+    function hideInfo() {
+        var info = document.getElementById('info');
+        if (info) {
+            info.classList.add('hidden');
+            }
+          }
+
+    function showInfo() {
+        var info = document.getElementById('info');
+        if (info) {
+            info.classList.remove('hidden');
+            }
+          }
+
+    function hideTimeTaken() {
+        var timeTaken = document.getElementById('time-taken');
+        if (timeTaken) {
+            timeTaken.classList.add('hidden');
+            }
+          }
+
+    function showTimeTaken() {
+        var timeTaken = document.getElementById('time-taken');
+        if (timeTaken) {
+            timeTaken.classList.remove('hidden');
+            }
+          }
+
+    function hideWordCount() {
+        var wordCount = document.getElementById('word-count');
+        if (wordCount) {
+            wordCount.classList.add('hidden');
+            }
+          }
+
+    function showWordCount() {
+        var wordCount = document.getElementById('word-count');
+        if (wordCount) {
+            wordCount.classList.remove('hidden');
+            }
+          }
+
+    function setTimeTaken(time) {
+        var timeTaken = document.getElementById('time-taken');
+        if (timeTaken) {
+            timeTaken.textContent = 'Time taken: ' + time + ' ms';
+            }
+          }
+
+    function setWordCount(count) {
+        var wordCount = document.getElementById('word-count');
+        if (wordCount) {
+            wordCount.textContent = 'Words returned: ' + count;
+            }
+          }
+
+    return {
+        init: init,
+        displayResults: displayResults,
+        clearResults: clearResults,
+        updateSubmitExcludesButton: updateSubmitExcludesButton,
+        hideInfo: hideInfo,
+        showInfo: showInfo,
+        hideTimeTaken: hideTimeTaken,
+        showTimeTaken: showTimeTaken,
+        hideWordCount: hideWordCount,
+        showWordCount: showWordCount,
+        setTimeTaken: setTimeTaken,
+        setWordCount: setWordCount
+        };
+      })();
