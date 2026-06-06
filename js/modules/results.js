@@ -60,9 +60,12 @@ var Results = (function() {
             letterMatrixInputs.forEach(function(input) {
                 input.style.backgroundColor = '';
                 input.style.color = '';
-                });
-              }
-           }
+                 // Remove animation overlay class and data attribute
+                input.parentElement.classList.remove('animating');
+                input.parentElement.removeAttribute('data-order');
+                 });
+               }
+            }
 
     function highlightWordInMatrix(word) {
         var results = Storage.getResults();
